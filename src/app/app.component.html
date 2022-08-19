@@ -76,14 +76,20 @@
     <img (click)="closeNav()" src="../assets/icons/icon-close-menu.svg"/>
   </div>
   <div class="d-flex flex-column gap-3 side-nav-dropdowns">
-    <div>Features <img (click)="isFeatureClicked = !isFeatureClicked"  src="../assets/icons/icon-arrow-down.svg"/></div>
+    <div>Features 
+    <img *ngIf="!isFeatureClicked" (click)="isFeatureClicked = !isFeatureClicked"  src="../assets/icons/icon-arrow-down.svg"/>
+    <img *ngIf="isFeatureClicked" (click)="isFeatureClicked = !isFeatureClicked"  src="../assets/icons/icon-arrow-up.svg"/>
+    </div>
     <div *ngIf="isFeatureClicked" class="feature-content">
       <p><img class="img-fluid feature-logos" src="../assets/icons/icon-todo.svg"/>&nbsp;&nbsp;&nbsp;&nbsp;Todo List</p>
       <p><img class="img-fluid feature-logos"  src="../assets/icons/icon-calendar.svg"/>&nbsp;&nbsp;&nbsp;&nbsp;Calendar</p>
       <p><img class="img-fluid feature-logos"  src="../assets/icons/icon-reminders.svg"/>&nbsp;&nbsp;&nbsp;&nbsp;Reminders</p>
       <p><img class="img-fluid feature-logos"  src="../assets/icons/icon-planning.svg"/>&nbsp;&nbsp;&nbsp;&nbsp;Planning</p>
     </div>
-    <div>Company <img  (click)="isCompanyClicked = !isCompanyClicked" src="../assets/icons/icon-arrow-down.svg"/></div>
+    <div>Company
+      <img *ngIf="!isCompanyClicked" (click)="isCompanyClicked = !isCompanyClicked" src="../assets/icons/icon-arrow-down.svg"/>
+      <img *ngIf="isCompanyClicked" (click)="isCompanyClicked = !isCompanyClicked" src="../assets/icons/icon-arrow-up.svg"/>
+    </div>
     <div *ngIf="isCompanyClicked" class="company-content">
       <p>History</p>
       <p>Our Team</p>
