@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { LinkService } from './link.service';
 
 @Component({
   selector: 'app-root',
@@ -7,25 +9,21 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'landing-page-design';
-  changeIconFeature: boolean = false;
-  changeIconCompany: boolean = false;
-  isSideNavOpen: boolean = false;
-  isFeatureClicked: boolean = false;
-  isCompanyClicked: boolean = false;
+  linkArray:any=[];
 
-  openNav(){
-    this.isSideNavOpen = true;
-    setTimeout(()=>{
-      document.getElementById("mySidenav")!.style.width = "275px";
+  constructor(private fb: FormBuilder,private linkService:LinkService){}
+
+  linkForm = this.fb.group({
+    link: ["", Validators.required]
+  });
+  get linkFormControl() {
+    return this.linkForm.controls;
+  }
+  onSubmit(){
+    this.linkService.shortenUrl(this.linkForm.value.link).subscribe((data:any)=>{
+      console.log(data);
+      this.linkArray.push(data?.result);
+      this.linkForm.reset();
     })
-    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
   }
-  closeNav(){
-    document.getElementById("mySidenav")!.style.width = "0";
-    this.isSideNavOpen = false;
-    this.isFeatureClicked = false;
-    this.isCompanyClicked = false;
-    document.body.style.backgroundColor = "white";
-  }
-
 }

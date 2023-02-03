@@ -1,107 +1,168 @@
-<div class="container-fluid pt-2">
-  <div class="row">
-      <div class="col col-md-2 align-self-center">
-        <h1 class="nav-head">snap</h1>
+<nav class="lg:flex lg:justify-between lg:mx-56 lg:pt-8 mx-4 pt-4">
+  <div class="left__section lg:flex lg:gap-8  flex justify-between items-center">
+    <div class="nav__logo">
+      <img src="../assets/images/logo.svg" alt="nav__logo"/>
+    </div>
+    <div class="hidden lg:flex lg:gap-8">
+      <div class="text-sm font-bold text-[#9E9AA7] hover:text-[#000] cursor-pointer">Features</div>
+      <div class="text-sm font-bold text-[#9E9AA7] hover:text-[#000] cursor-pointer">Pricing</div>
+      <div class="text-sm font-bold text-[#9E9AA7] hover:text-[#000] cursor-pointer">Resources</div>
+    </div>
+    <div class="menu lg:hidden">
+      <img src="../assets/images/icon-menu.svg" alt="hamburger-menu"/>
+    </div>
+  </div>
+  <div class="right__section">
+    <div class="button__container hidden lg:flex lg:gap-8 lg:items-center">
+      <div class="text-sm font-bold text-[#9E9AA7] hover:text-[#000] cursor-pointer">Login</div>
+      <div class="text-sm text-center font-bold text-white px-6 py-2 rounded-full bg-[#2ACFCF] cursor-pointer hover:opacity-50">Sign Up</div>
+    </div>
+  </div>
+ 
+</nav>
+<section class="first-section grid lg:grid-cols-2 lg:ml-56 lg:pt-20  pt-10 gap-y-8">
+<div class="left-section flex flex-col gap-3 gap-y-8  lg:order-1 order-2 lg:pt-16">
+  <div class="lg:text-7xl lg:text-left font-bold lg:w-4/5 text-5xl w-full text-center">More than just shorter links</div>
+  <p class="lg:w-2/3 lg:text-xl lg:text-left  text-[#9E9AA7] text-center text-lg w-full">Build your brand's recognition and get detailed insights on how your links are performing.</p>
+  <div class="lg:self-start self-center lg:text-sm text-lg text-center font-bold text-white lg:px-8 lg:py-3 px-2 py-4 rounded-full bg-[#2ACFCF] cursor-pointer hover:opacity-50 lg:w-36 w-3/5">
+    Get Started
+  </div>
+</div>
+<div class="right-section  lg:order-2 order-1">
+  <img class="h-full" src="../assets/images/illustration-working.svg" alt="illustration-working"/>
+</div>
+</section>
+
+<section class="second-section lg:mx-56 lg:mt-2 lg:h-32 md:h-36 h-38 mx-4 mt-6  px-4 py-4 relative top-14 bg-[#3b3054] bg-[url('../assets/images/bg-boost-desktop.svg')] rounded-lg xl:grid xl:grid-cols-4 grid gap-y-2 xl:px-10 xl:py-0">
+  <div [formGroup]="linkForm" class="xl:col-span-3">
+      <div class="flex justify-center items-center h-full">
+        <input formControlName="link" autocomplete="off" type="text" placeholder="Shorten a link here..." class="block w-full px-3 py-2 rounded"  required/>
       </div>
-      <div class="col col-md-8 align-self-center dropdowns-cols">
-        <div class="d-flex gap-4 nav-dropdowns">
-          <div (mouseover)="changeIconFeature=true" (mouseout)="changeIconFeature=false" class="dropdown">
-            Features&nbsp;
-            <img *ngIf="!changeIconFeature" src="../assets/icons/icon-arrow-down.svg"/>
-            <img *ngIf="changeIconFeature" src="../assets/icons/icon-arrow-up.svg"/>
-            <div class="dropdown-content-feature">
-              <p><img src="../assets/icons/icon-todo.svg"/>&nbsp;&nbsp;&nbsp;&nbsp;Todo List</p>
-              <p><img src="../assets/icons/icon-calendar.svg"/>&nbsp;&nbsp;&nbsp;&nbsp;Calendar</p>
-              <p><img src="../assets/icons/icon-reminders.svg"/>&nbsp;&nbsp;&nbsp;&nbsp;Reminders</p>
-              <p><img src="../assets/icons/icon-planning.svg"/>&nbsp;&nbsp;&nbsp;&nbsp;Planning</p>
+      <!-- <div *ngIf="linkForm.get('link')?.errors?.required && linkFormControl.link.touched">
+        <small style="color: red;">Please add a link</small>
+      </div> -->
+  </div>
+  <div class="xl:col-span-1">
+    <div class="flex justify-center items-center h-full">
+      <div (click)="onSubmit()" class="text-lg text-center font-bold text-white rounded px-8 py-2 bg-[#2ACFCF] cursor-pointer hover:opacity-50 block w-full xl:inline xl:w-auto">Shorten it</div>
+    </div>
+  </div>
+</section>
+
+<section class="third-section lg:pt-10 lg:px-56 pt-12 bg-[#f0f1f6] ">
+  <div class="link-section pt-10 mx-5 lg:mx-0">
+    <div *ngFor="let link of linkArray" class="link-card md:h-[3.5rem] h-[10rem] md:py-0 py-4 rounded flex justify-between px-8 items-center bg-white mt-4">
+      <div class="link-card-inner md:flex md:flex-row flex flex-col gap-1 md:justify-between md:items-center w-full">
+        <div class="link-card-inner__left md:text-sm text-base font-semibold text-[#000000a6] break-all">{{link?.original_link}}</div>
+        <div class="link-card-inner__right">
+          <div class="right__inner md:flex md:flex-row md:gap-4 md:items-center flex flex-col gap-3">
+            <div  class="md:text-sm text-base font-semibold text-[#2ACFCF]">{{link?.full_short_link}}</div>
+            <div class="copy-button-container">
+              <div [cdkCopyToClipboard]="link?.full_short_link" class="text-sm text-center font-bold text-white px-5 py-2 rounded-md bg-[#2ACFCF] cursor-pointer hover:opacity-50">Copy</div>
             </div>
           </div>
-          <div (mouseover)="changeIconCompany=true" (mouseout)="changeIconCompany=false"  class="dropdown">
-            Company&nbsp;
-            <img *ngIf="!changeIconCompany" src="../assets/icons/icon-arrow-down.svg"/>
-            <img *ngIf="changeIconCompany" src="../assets/icons/icon-arrow-up.svg"/>
-            <div class="dropdown-content-company">
-              <p>History</p>
-              <p>Our Team</p>
-              <p>Blog</p>
-            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sub-section-1 flex flex-col justify-center gap-4 items-center pt-16">
+    <div class="text-3xl font-bold">Advanced Statistics</div>
+    <div class="text-[#9E9AA7] text-center lg:w-[38%] md:w-[50%] w-[70%]">Track how your link are performing across the web with our advanced statistics dashboard.</div>
+  </div>
+  <div class="sub-section-2 lg:pt-10 lg:flex lg:flex-wrap lg:justify-between lg:gap-0 flex flex-wrap justify-center gap-10 pt-16">
+    <div class="cards border bg-white w-[340px] h-[280px] rounded-lg flex justify-center items-center p-8">
+      <div class="card-content">
+        <div class="img-container relative bottom-16">
+          <img class="rounded-full w-16 bg-[#232127]" src="../assets/images/icon-brand-recognition.svg" alt="brand-recognition"/>
+        </div>
+        <div class="card-inner flex flex-col gap-6">
+          <div class="card-header font-bold text-lg">Brand Recognition</div>
+          <div class="card-description font-semibold text-[#9E9AA7]">
+            Boost your brand recognition with each click. Generic links don't mean a thing. Branded links help instill confidence in your content.
           </div>
-          <div>Careers</div>
-          <div>About</div>
         </div>
       </div>
-      <div class="col col-md-2 align-self-center buttons-cols">
-        <div class="d-flex gap-4 nav-buttons">
-          <button class="login-button">Login</button>
-          <button class="register-button">Register</button>
+    </div>
+    <div class="cards bg-white w-[340px] h-[280px] rounded-lg lg:mt-8  flex justify-center items-center p-8">
+      <div class="card-content">
+        <div class="img-container relative bottom-16">
+          <img class="rounded-full w-16 bg-[#232127]" src="../assets/images/icon-detailed-records.svg" alt="brand-recognition"/>
+        </div>
+        <div class="card-inner flex flex-col gap-6">
+          <div class="card-header font-bold text-lg">Detailed Records</div>
+          <div class="card-description font-semibold text-[#9E9AA7]">
+            Gain insights into who is clicking your links. Knowing whwn and where people enage with your content helps inform better decisions.
+          </div>
         </div>
       </div>
-      <img (click)="openNav()" class="img-fluid d-md-none align-self-center hamburger" src="../assets/images/icon-menu.svg"/>
+    </div>
+    <div class="cards border bg-white w-[340px] h-[280px] rounded-lg lg:mt-14 flex justify-center items-center p-8">
+      <div class="card-content">
+        <div class="img-container relative bottom-16">
+          <img class="rounded-full w-16 bg-[#232127]" src="../assets/images/icon-fully-customizable.svg" alt="brand-recognition"/>
+        </div>
+        <div class="card-inner flex flex-col gap-6">
+          <div class="card-header  font-bold text-lg">Fully Customizable</div>
+          <div class="card-description font-semibold text-[#9E9AA7]">
+            Imrove brand awareness and content discoverabilty though customizable links, supercharging audience engagement.
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+  <br><br>
+</section>
 
-<div class="container pt-4 pt-md-5">
-  <div class="row">
-    <div class="col-12 col-md-5 order-md-2 hero-container">
-      <img class="img-fluid hero-image" src="../assets/images/image-hero-desktop.png">
-      <img class="img-fluid hero-image-mobile" src="../assets/images/image-hero-mobile.png">
-    </div>
-    <div class="col-12 col-md-7 order-md-1 desc-col">
-      <div class="d-md-inline d-flex gap-1 short-desc-container">
-        <h1 class="short-desc">Make</h1>
-        <h1 class="short-desc">remote work</h1>
-      </div>
-      <div class="long-desc">
-        <p>
-          Get your team in sync, no matter your location.
-          Streamline processes, create team rituals, and
-          watch productivity soar.
-        </p>
-      </div>
-      <div class="learn-more-content">
-        <button class="learn-more-button">Learn more</button>
-      </div>
-      <div class="d-flex company-images">
-        <img class="img-fluid com-img" src="../assets/images/client-databiz.svg"/>
-        <img class="img-fluid com-img" src="../assets/images/client-audiophile.svg"/>
-        <img class="img-fluid com-img" src="../assets/images/client-meet.svg"/>
-        <img class="img-fluid com-img" src="../assets/images/client-maker.svg"/>
+<section class="fourth-section h-36  flex justify-center items-center bg-[#3b3054] bg-[url('../assets/images/bg-shorten-desktop.svg')]">
+  <div class="info-container flex flex-col gap-4">
+    <div class="text-white text-2xl font-bold">Boost your links today</div>
+    <div class="button-wrapper flex justify-center">
+      <div class="lg:self-start self-center lg:text-sm text-lg text-center font-bold text-white lg:px-8 lg:py-3 px-2 py-4 rounded-full bg-[#2ACFCF] cursor-pointer hover:opacity-50 lg:w-36 w-3/5">
+        Get Started
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<div *ngIf="isSideNavOpen" id="mySidenav" class="sidenav">
-  <div class="close-icon-container">
-    <img (click)="closeNav()" src="../assets/icons/icon-close-menu.svg"/>
+<section class="footer h-min lg:px-56 bg-[#232127]">
+  <div class="footer-container lg:flex lg:flex-row lg:justify-between lg:items-start lg:text-left flex flex-col items-center text-center py-8">
+    <div class="footer__left">
+     <div class="text-white text-2xl font-bold">Shortly</div>
+    </div>
+    <div class="footer__right lg:flex lg:flex-row lg:gap-8 flex flex-col gap-10">
+      <div class="flex flex-col gap-8">
+        <div class="head text-white text-sm font-bold">Features</div>
+        <div class="flex flex-col gap-4">
+          <div class="text-gray-400 text-xs hover:text-[#2ACFCF] cursor-pointer">Link Shortening</div>
+          <div class="text-gray-400 text-xs hover:text-[#2ACFCF] cursor-pointer">Branded Links</div>
+          <div class="text-gray-400 text-xs hover:text-[#2ACFCF] cursor-pointer">Analytics</div>
+        </div>
+      </div>
+      <div class="flex flex-col gap-8">
+        <div class="head text-white text-sm font-bold">Resources</div>
+        <div class="flex flex-col gap-4">
+          <div class="text-gray-400 text-xs hover:text-[#2ACFCF] cursor-pointer">Blog</div>
+          <div class="text-gray-400 text-xs hover:text-[#2ACFCF] cursor-pointer">Developers</div>
+          <div class="text-gray-400 text-xs hover:text-[#2ACFCF] cursor-pointer">Support</div>
+        </div>
+      </div>
+      <div class="flex flex-col gap-8">
+        <div class="head text-white text-sm font-bold">Company</div>
+        <div class="flex flex-col gap-4">
+          <div class="text-gray-400 text-xs hover:text-[#2ACFCF] cursor-pointer">About</div>
+          <div class="text-gray-400 text-xs hover:text-[#2ACFCF] cursor-pointer">Our Team</div>
+          <div class="text-gray-400 text-xs hover:text-[#2ACFCF] cursor-pointer">Careers</div>
+          <div class="text-gray-400 text-xs hover:text-[#2ACFCF] cursor-pointer">Contact</div>
+        </div>
+      </div>
+      <div class="social-sites flex gap-4">
+        <img class="h-4 cursor-pointer" src="../assets/images/icon-facebook.svg" alt="facebook">
+        <img class="h-4 cursor-pointer" src="../assets/images/icon-twitter.svg" alt="twitter">
+        <img class="h-4 cursor-pointer" src="../assets/images/icon-pinterest.svg" alt="pinterest">
+        <img class="h-4 cursor-pointer" src="../assets/images/icon-instagram.svg" alt="instagram">
+      </div>
+    </div>
   </div>
-  <div class="d-flex flex-column gap-3 side-nav-dropdowns">
-    <div>Features 
-    <img *ngIf="!isFeatureClicked" (click)="isFeatureClicked = !isFeatureClicked"  src="../assets/icons/icon-arrow-down.svg"/>
-    <img *ngIf="isFeatureClicked" (click)="isFeatureClicked = !isFeatureClicked"  src="../assets/icons/icon-arrow-up.svg"/>
-    </div>
-    <div *ngIf="isFeatureClicked" class="feature-content">
-      <p><img class="img-fluid feature-logos" src="../assets/icons/icon-todo.svg"/>&nbsp;&nbsp;&nbsp;&nbsp;Todo List</p>
-      <p><img class="img-fluid feature-logos"  src="../assets/icons/icon-calendar.svg"/>&nbsp;&nbsp;&nbsp;&nbsp;Calendar</p>
-      <p><img class="img-fluid feature-logos"  src="../assets/icons/icon-reminders.svg"/>&nbsp;&nbsp;&nbsp;&nbsp;Reminders</p>
-      <p><img class="img-fluid feature-logos"  src="../assets/icons/icon-planning.svg"/>&nbsp;&nbsp;&nbsp;&nbsp;Planning</p>
-    </div>
-    <div>Company
-      <img *ngIf="!isCompanyClicked" (click)="isCompanyClicked = !isCompanyClicked" src="../assets/icons/icon-arrow-down.svg"/>
-      <img *ngIf="isCompanyClicked" (click)="isCompanyClicked = !isCompanyClicked" src="../assets/icons/icon-arrow-up.svg"/>
-    </div>
-    <div *ngIf="isCompanyClicked" class="company-content">
-      <p>History</p>
-      <p>Our Team</p>
-      <p>Blog</p>
-    </div>
-    <div>Careers</div>
-    <div>About</div>
-  </div>
-  <div class="d-flex flex-column gap-4 nav-buttons-container">
-    <button class="nav-login">Login</button>
-    <button class="nav-register">Register</button>
-  </div>
-</div>
-
+</section>
+<!-- <br> -->
 <router-outlet></router-outlet>
