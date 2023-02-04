@@ -10,6 +10,8 @@ import { LinkService } from './link.service';
 export class AppComponent {
   title = 'landing-page-design';
   linkArray:any=[];
+  isShowMenu:boolean=false;
+  copiedLink:string='';
 
   constructor(private fb: FormBuilder,private linkService:LinkService){}
 
@@ -24,6 +26,14 @@ export class AppComponent {
       console.log(data);
       this.linkArray.push(data?.result);
       this.linkForm.reset();
+    },(error)=>{
+     alert(error.error.error);
     })
+  }
+  showMenu(){
+    this.isShowMenu = !this.isShowMenu;
+  }
+  getCopiedLink(link:string){
+    this.copiedLink = link;
   }
 }

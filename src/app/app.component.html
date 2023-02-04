@@ -8,7 +8,7 @@
       <div class="text-sm font-bold text-[#9E9AA7] hover:text-[#000] cursor-pointer">Pricing</div>
       <div class="text-sm font-bold text-[#9E9AA7] hover:text-[#000] cursor-pointer">Resources</div>
     </div>
-    <div class="menu lg:hidden">
+    <div (click)="showMenu()" class="menu cursor-pointer lg:hidden">
       <img src="../assets/images/icon-menu.svg" alt="hamburger-menu"/>
     </div>
   </div>
@@ -20,6 +20,15 @@
   </div>
  
 </nav>
+<section *ngIf="isShowMenu" class="dropdown-mobile bg-[#3b3054] flex flex-col gap-8 mx-4 mt-4 p-8 rounded-lg items-center">
+  <div class="text-xl font-bold text-white">Features</div>
+  <div class="text-xl font-bold text-white">Pricing</div>
+  <div class="text-xl font-bold text-white">Resources</div>
+  <div class="text-xl font-bold text-white">Login</div>
+  <div class="text-xl text-center font-bold text-white px-24 py-2 rounded-full bg-[#2ACFCF] cursor-pointer hover:opacity-50">
+    Sign Up
+  </div>
+</section>
 <section class="first-section grid lg:grid-cols-2 lg:ml-56 lg:pt-20  pt-10 gap-y-8">
 <div class="left-section flex flex-col gap-3 gap-y-8  lg:order-1 order-2 lg:pt-16">
   <div class="lg:text-7xl lg:text-left font-bold lg:w-4/5 text-5xl w-full text-center">More than just shorter links</div>
@@ -33,14 +42,14 @@
 </div>
 </section>
 
-<section class="second-section lg:mx-56 lg:mt-2 lg:h-32 md:h-36 h-38 mx-4 mt-6  px-4 py-4 relative top-14 bg-[#3b3054] bg-[url('../assets/images/bg-boost-desktop.svg')] rounded-lg xl:grid xl:grid-cols-4 grid gap-y-2 xl:px-10 xl:py-0">
+<section class="second-section lg:mx-56 lg:mt-2 lg:h-32 md:h-36 h-38 mx-4 mt-6  px-4 py-4 relative top-14 bg-[#3b3054] bg-[url('../assets/images/bg-boost-desktop.svg')] rounded-lg xl:grid xl:grid-cols-4 grid gap-y-4 xl:px-10 xl:py-0">
   <div [formGroup]="linkForm" class="xl:col-span-3">
-      <div class="flex justify-center items-center h-full">
+      <div class="flex flex-col justify-center items-center h-full">
         <input formControlName="link" autocomplete="off" type="text" placeholder="Shorten a link here..." class="block w-full px-3 py-2 rounded"  required/>
+        <div class="xl:absolute xl:bottom-4 xl:left-12 absolute bottom-14 left-4" *ngIf="linkForm.get('link')?.errors?.required && linkFormControl.link.touched">
+          <small class="text-red-700">Please add a link</small>
+        </div>
       </div>
-      <!-- <div *ngIf="linkForm.get('link')?.errors?.required && linkFormControl.link.touched">
-        <small style="color: red;">Please add a link</small>
-      </div> -->
   </div>
   <div class="xl:col-span-1">
     <div class="flex justify-center items-center h-full">
@@ -58,7 +67,7 @@
           <div class="right__inner md:flex md:flex-row md:gap-4 md:items-center flex flex-col gap-3">
             <div  class="md:text-sm text-base font-semibold text-[#2ACFCF]">{{link?.full_short_link}}</div>
             <div class="copy-button-container">
-              <div [cdkCopyToClipboard]="link?.full_short_link" class="text-sm text-center font-bold text-white px-5 py-2 rounded-md bg-[#2ACFCF] cursor-pointer hover:opacity-50">Copy</div>
+              <div (click)="getCopiedLink(link?.original_link)" [cdkCopyToClipboard]="link?.full_short_link" class="text-sm text-center font-bold text-white px-5 py-2 rounded-md bg-[#2ACFCF] cursor-pointer hover:opacity-50">{{copiedLink === link?.original_link ? 'Copied' : 'Copy'}}</div>
             </div>
           </div>
         </div>
